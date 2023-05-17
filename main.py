@@ -63,6 +63,13 @@ for epoch in range(1, 51):
         preds = torch.argmax(preds, dim=1)
         sum_accu += (preds == label).float().mean()
         num += 1
+        loss_func.backward()
+        # 反向传播
+        loss_func.backward()
+        # 计算梯度，并更新梯度
+        opti.step()
+        # 将梯度归零，初始化梯度
+        opti.zero_grad()
     loss_value = loss_num / len(test_loader)
     print(sum_accu)
     print("\n" + 'accuracy: {}'.format(sum_accu / num))
