@@ -13,8 +13,10 @@ from Getdata import *
 import argparse
 from torch.utils.data import TensorDataset
 
+# python main -iid 0
+
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter, description="centrol")
-parser.add_argument('-iid', '--IID', type=int, default=1, help='the way to allocate data to clients')
+parser.add_argument('-iid', '--IID', type=int, default=0 , help='the way to allocate data to clients')
 parser.add_argument('-epoch', '--epoch', type=int, default=50, help='train epoch')
 
 
