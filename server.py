@@ -191,17 +191,22 @@ if __name__=="__main__":
         net.load_state_dict(global_parameters, strict=True)
         sum_accu = 0
         num = 0
+        loss_num = 0
         # 载入测试集
         for data, label in testDataLoader:
             data, label = data.to(dev), label.to(dev)
             preds = net(data)
+            loss1 = loss_func(preds, label)
+            loss_num += loss1.item()
             preds = torch.argmax(preds, dim=1)
             sum_accu += (preds == label).float().mean()
             num += 1
         print("\n"+'accuracy: {}'.format(sum_accu / num))
 
-        test_txt.write("communicate round "+str(i+1)+"  ")
-        test_txt.write('accuracy: '+str(float(sum_accu / num))+"\n")
+        test_txt.write(str(i+1)+" ")
+        test_txt.write(str(float(sum_accu / num))+' ')
+        loss_value = loss_num / len(testDataLoader)
+        test_txt.write(str(float(loss_value))+"\n")
         #test_txt.close()
 
         if (i + 1) % args['save_freq'] == 0:
